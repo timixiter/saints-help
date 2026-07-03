@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SAIN♱S - Request System</title>
   <style>
-    /* --- CSS sama seperti sebelumnya, hanya disingkat agar fokus --- */
     * { margin:0; padding:0; box-sizing:border-box; }
     body { font-family:'Segoe UI',sans-serif; background:#f0f2f5; padding:20px; min-height:100vh; display:flex; align-items:center; justify-content:center; }
     .brand { font-size:2rem; font-weight:700; color:#1a1a2e; margin-bottom:10px; }
@@ -50,34 +49,16 @@
 <body>
   <div id="root"></div>
 
-  <!-- Import Map using esm.sh (reliable ESM) -->
-  <script type="importmap">
-    {
-      "imports": {
-        "react": "https://esm.sh/react@19.0.0",
-        "react-dom": "https://esm.sh/react-dom@19.0.0",
-        "react-dom/client": "https://esm.sh/react-dom@19.0.0/client"
-      }
-    }
-  </script>
+  <!-- Load React and ReactDOM via CDN with explicit script tags (not importmap) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
   <!-- Babel Standalone -->
   <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
 
   <!-- ========== REACT APPLICATION ========== -->
   <script type="text/babel">
-    // --- Global error handler ---
-    window.addEventListener('error', (e) => {
-      console.error('Global error:', e.error || e.message);
-      document.getElementById('root').innerHTML = `
-        <div style="color:red;padding:20px;background:#ffe0e0;border-radius:10px;">
-          <h3>❌ Application Error</h3>
-          <p>${e.error?.message || e.message || 'Unknown error'}</p>
-          <p style="font-size:0.8rem;margin-top:10px;">Check console for details.</p>
-        </div>
-      `;
-    });
-
+    // React and ReactDOM are now globally available
     const { useState, useEffect, useContext, createContext, useCallback } = React;
 
     // --- API Client ---
@@ -383,20 +364,9 @@
       return <AuthProvider>{renderPage()}</AuthProvider>;
     }
 
-    // --- Render with error boundary ---
-    try {
-      const root = ReactDOM.createRoot(document.getElementById('root'));
-      root.render(<App />);
-    } catch (err) {
-      console.error('Render error:', err);
-      document.getElementById('root').innerHTML = `
-        <div style="color:red;padding:20px;background:#ffe0e0;border-radius:10px;">
-          <h3>❌ Render Error</h3>
-          <p>${err.message}</p>
-          <pre style="font-size:0.8rem;margin-top:10px;">${err.stack}</pre>
-        </div>
-      `;
-    }
+    // --- Render ---
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
   </script>
 </body>
 </html>
