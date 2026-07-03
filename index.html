@@ -5,256 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SAIN♱S - Request System</title>
   <style>
-    /* ---------- Reset & Base ---------- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-      background: #f0f2f5;
-      padding: 20px;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .brand {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      color: #1a1a2e;
-      margin-bottom: 10px;
-    }
-    .brand span {
-      color: #e94560;
-    }
-    .container {
-      max-width: 820px;
-      width: 100%;
-      background: white;
-      padding: 35px 40px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      transition: 0.3s;
-    }
-    h1 {
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: #1a1a2e;
-      margin-bottom: 25px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    h1 small {
-      font-size: 0.9rem;
-      font-weight: 400;
-      color: #6c757d;
-    }
-    .form-group {
-      margin-bottom: 18px;
-    }
-    label {
-      display: block;
-      font-weight: 500;
-      margin-bottom: 6px;
-      color: #2d2d3f;
-    }
-    input,
-    textarea {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1.5px solid #e0e0e0;
-      border-radius: 10px;
-      font-size: 15px;
-      transition: 0.2s;
-      font-family: inherit;
-    }
-    input:focus,
-    textarea:focus {
-      outline: none;
-      border-color: #e94560;
-      box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.15);
-    }
-    button {
-      background: #e94560;
-      color: white;
-      border: none;
-      padding: 12px 28px;
-      border-radius: 30px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    button:hover {
-      background: #c73a52;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(233, 69, 96, 0.3);
-    }
-    button:active {
-      transform: translateY(0);
-    }
-    .btn-outline {
-      background: transparent;
-      color: #e94560;
-      border: 2px solid #e94560;
-    }
-    .btn-outline:hover {
-      background: #e94560;
-      color: white;
-      box-shadow: none;
-    }
-    .btn-danger {
-      background: #dc3545;
-    }
-    .btn-danger:hover {
-      background: #b02a37;
-    }
-    hr {
-      margin: 28px 0;
-      border: none;
-      border-top: 1.5px solid #eee;
-    }
-    .info {
-      margin: 12px 0;
-      font-weight: 500;
-      padding: 10px 14px;
-      border-radius: 8px;
-    }
-    .info.success {
-      background: #d4edda;
-      color: #155724;
-    }
-    .info.error {
-      background: #f8d7da;
-      color: #721c24;
-    }
-
-    /* ----- Message List ----- */
-    .message-item {
-      border: 1px solid #e9ecef;
-      border-radius: 14px;
-      padding: 18px 20px;
-      margin-bottom: 16px;
-      background: #fafbfc;
-      transition: 0.2s;
-    }
-    .message-item:hover {
-      background: #f8f9fa;
-      border-color: #dee2e6;
-    }
-    .message-item.unread {
-      border-left: 6px solid #ffc107;
-    }
-    .message-item.read {
-      border-left: 6px solid #28a745;
-    }
-    .msg-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px 16px;
-      margin-bottom: 6px;
-    }
-    .msg-header strong {
-      font-size: 1.05rem;
-      color: #1a1a2e;
-    }
-    .msg-date {
-      font-size: 0.85rem;
-      color: #6c757d;
-    }
-    .msg-status {
-      font-size: 0.8rem;
-      padding: 3px 12px;
-      border-radius: 30px;
-      background: #e9ecef;
-    }
-    .msg-status.read {
-      background: #d4edda;
-      color: #155724;
-    }
-    .msg-status.unread {
-      background: #fff3cd;
-      color: #856404;
-    }
-    .msg-email {
-      font-size: 0.9rem;
-      color: #495057;
-      margin-bottom: 4px;
-    }
-    .msg-body {
-      margin: 10px 0 6px;
-      white-space: pre-wrap;
-      word-break: break-word;
-      color: #212529;
-    }
-    .read-btn {
-      background: #28a745;
-      padding: 6px 18px;
-      font-size: 14px;
-      border-radius: 30px;
-      margin-top: 6px;
-    }
-    .read-btn:hover {
-      background: #1e7e34;
-      transform: none;
-      box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
-    }
-
-    /* ----- Login box ----- */
-    .login-box {
-      max-width: 420px;
-      margin: 0 auto;
-    }
-
-    /* ----- Utilities ----- */
-    .flex-between {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .text-center {
-      text-align: center;
-    }
-    .mt-20 {
-      margin-top: 20px;
-    }
-    .link {
-      color: #e94560;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .link:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        padding: 22px 18px;
-      }
-      .brand {
-        font-size: 1.6rem;
-      }
-    }
+    /* --- CSS sama seperti sebelumnya, hanya disingkat agar fokus --- */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Segoe UI',sans-serif; background:#f0f2f5; padding:20px; min-height:100vh; display:flex; align-items:center; justify-content:center; }
+    .brand { font-size:2rem; font-weight:700; color:#1a1a2e; margin-bottom:10px; }
+    .brand span { color:#e94560; }
+    .container { max-width:820px; width:100%; background:#fff; padding:35px 40px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.08); }
+    h1 { font-size:1.8rem; font-weight:600; color:#1a1a2e; margin-bottom:25px; display:flex; align-items:center; gap:10px; }
+    h1 small { font-size:0.9rem; font-weight:400; color:#6c757d; }
+    .form-group { margin-bottom:18px; }
+    label { display:block; font-weight:500; margin-bottom:6px; color:#2d2d3f; }
+    input, textarea { width:100%; padding:12px 14px; border:1.5px solid #e0e0e0; border-radius:10px; font-size:15px; transition:0.2s; font-family:inherit; }
+    input:focus, textarea:focus { outline:none; border-color:#e94560; box-shadow:0 0 0 3px rgba(233,69,96,0.15); }
+    button { background:#e94560; color:#fff; border:none; padding:12px 28px; border-radius:30px; font-size:16px; font-weight:600; cursor:pointer; transition:0.2s; }
+    button:hover { background:#c73a52; transform:translateY(-2px); box-shadow:0 6px 14px rgba(233,69,96,0.3); }
+    .btn-danger { background:#dc3545; }
+    .btn-danger:hover { background:#b02a37; }
+    hr { margin:28px 0; border:none; border-top:1.5px solid #eee; }
+    .info { margin:12px 0; font-weight:500; padding:10px 14px; border-radius:8px; }
+    .info.success { background:#d4edda; color:#155724; }
+    .info.error { background:#f8d7da; color:#721c24; }
+    .message-item { border:1px solid #e9ecef; border-radius:14px; padding:18px 20px; margin-bottom:16px; background:#fafbfc; }
+    .message-item.unread { border-left:6px solid #ffc107; }
+    .message-item.read { border-left:6px solid #28a745; }
+    .msg-header { display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; margin-bottom:6px; }
+    .msg-header strong { font-size:1.05rem; color:#1a1a2e; }
+    .msg-date { font-size:0.85rem; color:#6c757d; }
+    .msg-status { font-size:0.8rem; padding:3px 12px; border-radius:30px; background:#e9ecef; }
+    .msg-status.read { background:#d4edda; color:#155724; }
+    .msg-status.unread { background:#fff3cd; color:#856404; }
+    .msg-email { font-size:0.9rem; color:#495057; margin-bottom:4px; }
+    .msg-body { margin:10px 0 6px; white-space:pre-wrap; word-break:break-word; color:#212529; }
+    .read-btn { background:#28a745; padding:6px 18px; font-size:14px; border-radius:30px; margin-top:6px; }
+    .read-btn:hover { background:#1e7e34; transform:none; box-shadow:0 4px 10px rgba(40,167,69,0.3); }
+    .login-box { max-width:420px; margin:0 auto; }
+    .flex-between { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+    .text-center { text-align:center; }
+    .mt-20 { margin-top:20px; }
+    .link { color:#e94560; text-decoration:none; font-weight:500; }
+    .link:hover { text-decoration:underline; }
+    @media (max-width:600px) { .container { padding:22px 18px; } .brand { font-size:1.6rem; } }
   </style>
 </head>
 <body>
-
   <div id="root"></div>
 
-  <!-- React 19 via Import Map -->
+  <!-- Import Map using esm.sh (reliable ESM) -->
   <script type="importmap">
     {
       "imports": {
-        "react": "https://unpkg.com/react@19.0.0/index.js",
-        "react-dom": "https://unpkg.com/react-dom@19.0.0/index.js",
-        "react-dom/client": "https://unpkg.com/react-dom@19.0.0/client.js"
+        "react": "https://esm.sh/react@19.0.0",
+        "react-dom": "https://esm.sh/react-dom@19.0.0",
+        "react-dom/client": "https://esm.sh/react-dom@19.0.0/client"
       }
     }
   </script>
@@ -262,13 +64,23 @@
   <!-- Babel Standalone -->
   <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
 
-  <!-- ================== REACT APPLICATION ================== -->
+  <!-- ========== REACT APPLICATION ========== -->
   <script type="text/babel">
+    // --- Global error handler ---
+    window.addEventListener('error', (e) => {
+      console.error('Global error:', e.error || e.message);
+      document.getElementById('root').innerHTML = `
+        <div style="color:red;padding:20px;background:#ffe0e0;border-radius:10px;">
+          <h3>❌ Application Error</h3>
+          <p>${e.error?.message || e.message || 'Unknown error'}</p>
+          <p style="font-size:0.8rem;margin-top:10px;">Check console for details.</p>
+        </div>
+      `;
+    });
+
     const { useState, useEffect, useContext, createContext, useCallback } = React;
 
-    // -------------------------------------------------------------
-    // 1. API Client (with JWT interceptor)
-    // -------------------------------------------------------------
+    // --- API Client ---
     const api = {
       base: '/api',
       async request(endpoint, method = 'GET', body = null) {
@@ -293,12 +105,9 @@
       get(url) { return this.request(url, 'GET'); },
       post(url, body) { return this.request(url, 'POST', body); },
       put(url, body) { return this.request(url, 'PUT', body); },
-      delete(url) { return this.request(url, 'DELETE'); },
     };
 
-    // -------------------------------------------------------------
-    // 2. Auth Context
-    // -------------------------------------------------------------
+    // --- Auth Context ---
     const AuthContext = createContext(null);
 
     function AuthProvider({ children }) {
@@ -345,12 +154,12 @@
     }
 
     function useAuth() {
-      return useContext(AuthContext);
+      const ctx = useContext(AuthContext);
+      if (!ctx) throw new Error('useAuth must be used within AuthProvider');
+      return ctx;
     }
 
-    // -------------------------------------------------------------
-    // 3. Custom Hook: useMessages
-    // -------------------------------------------------------------
+    // --- useMessages Hook ---
     function useMessages() {
       const [messages, setMessages] = useState([]);
       const [loading, setLoading] = useState(true);
@@ -381,7 +190,7 @@
       const markRead = async (id) => {
         try {
           await api.put(`/admin/messages/${id}`);
-          await load(); // refresh
+          await load();
           return { success: true };
         } catch (err) {
           return { success: false, error: 'Failed to update status' };
@@ -395,9 +204,7 @@
       return { messages, loading, error, send, markRead };
     }
 
-    // -------------------------------------------------------------
-    // 4. Components
-    // -------------------------------------------------------------
+    // --- Components ---
     function MessageForm() {
       const [nama, setNama] = useState('');
       const [email, setEmail] = useState('');
@@ -426,36 +233,17 @@
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Full Name *</label>
-            <input
-              type="text"
-              value={nama}
-              onChange={(e) => setNama(e.target.value)}
-              placeholder="Your full name"
-              required
-            />
+            <input type="text" value={nama} onChange={(e) => setNama(e.target.value)} placeholder="Your full name" required />
           </div>
           <div className="form-group">
             <label>Email Address</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-            />
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
           </div>
           <div className="form-group">
             <label>Request Details *</label>
-            <textarea
-              rows="5"
-              value={pesan}
-              onChange={(e) => setPesan(e.target.value)}
-              placeholder="Describe your request in detail..."
-              required
-            />
+            <textarea rows="5" value={pesan} onChange={(e) => setPesan(e.target.value)} placeholder="Describe your request..." required />
           </div>
-          {status.msg && (
-            <div className={`info ${status.type}`}>{status.msg}</div>
-          )}
+          {status.msg && <div className={`info ${status.type}`}>{status.msg}</div>}
           <button type="submit">Submit Request</button>
         </form>
       );
@@ -468,12 +256,9 @@
         return div.innerHTML;
       }
 
-      if (items.length === 0) {
-        return <p style={{ color: '#6c757d' }}><em>No requests yet.</em></p>;
-      }
+      if (items.length === 0) return <p style={{ color: '#6c757d' }}><em>No requests yet.</em></p>;
 
       const sorted = [...items].sort((a, b) => b.id - a.id);
-
       return (
         <div>
           {sorted.map((msg) => (
@@ -488,9 +273,7 @@
               <div className="msg-email">📧 {escape(msg.email || '-')}</div>
               <div className="msg-body">{escape(msg.pesan)}</div>
               {!msg.sudahDibaca && (
-                <button className="read-btn" onClick={() => onMarkRead(msg.id)}>
-                  Mark as Read
-                </button>
+                <button className="read-btn" onClick={() => onMarkRead(msg.id)}>Mark as Read</button>
               )}
             </div>
           ))}
@@ -508,9 +291,7 @@
       return children;
     }
 
-    // -------------------------------------------------------------
-    // 5. Pages
-    // -------------------------------------------------------------
+    // --- Pages ---
     function PublicPage() {
       return (
         <div className="container">
@@ -518,9 +299,7 @@
           <h1>📨 Submit a Request</h1>
           <MessageForm />
           <hr />
-          <p className="text-center">
-            <a href="#login" className="link">🔐 Admin Login</a>
-          </p>
+          <p className="text-center"><a href="#login" className="link">🔐 Admin Login</a></p>
         </div>
       );
     }
@@ -548,20 +327,12 @@
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter admin password"
-                required
-              />
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter admin password" required />
             </div>
             {error && <div className="info error">{error}</div>}
             <button type="submit">Login</button>
           </form>
-          <p className="text-center mt-20">
-            <a href="#/" className="link">← Back to Public</a>
-          </p>
+          <p className="text-center mt-20"><a href="#/" className="link">← Back to Public</a></p>
         </div>
       );
     }
@@ -576,18 +347,12 @@
             <h1>📩 Admin Dashboard <small>SAIN♱S</small></h1>
             <button onClick={logout} className="btn-danger">Logout</button>
           </div>
-          {loading ? (
-            <p>Loading requests...</p>
-          ) : (
-            <MessageList items={messages} onMarkRead={markRead} />
-          )}
+          {loading ? <p>Loading requests...</p> : <MessageList items={messages} onMarkRead={markRead} />}
         </div>
       );
     }
 
-    // -------------------------------------------------------------
-    // 6. Router (Hash-based)
-    // -------------------------------------------------------------
+    // --- Router ---
     function App() {
       const [hash, setHash] = useState(window.location.hash || '#/');
 
@@ -618,12 +383,20 @@
       return <AuthProvider>{renderPage()}</AuthProvider>;
     }
 
-    // -------------------------------------------------------------
-    // 7. Render
-    // -------------------------------------------------------------
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
+    // --- Render with error boundary ---
+    try {
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    } catch (err) {
+      console.error('Render error:', err);
+      document.getElementById('root').innerHTML = `
+        <div style="color:red;padding:20px;background:#ffe0e0;border-radius:10px;">
+          <h3>❌ Render Error</h3>
+          <p>${err.message}</p>
+          <pre style="font-size:0.8rem;margin-top:10px;">${err.stack}</pre>
+        </div>
+      `;
+    }
   </script>
-
 </body>
-  </html>
+</html>
