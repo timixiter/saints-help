@@ -1,0 +1,233 @@
+/* ============================================================
+   EXPANDING SEARCH - Adaptasi dari React Component
+   ============================================================ */
+
+.exp-search-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.exp-search-pill {
+  height: 52px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  box-sizing: border-box;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: 
+    width 0.45s cubic-bezier(0.25, 0.8, 0.25, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  width: 52px;
+  min-width: 52px;
+  will-change: width;
+}
+
+.exp-search-pill.expanded {
+  width: 100%;
+  max-width: 480px;
+  border-color: rgba(139, 92, 246, 0.35);
+  background: rgba(10, 10, 12, 0.6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(139, 92, 246, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.exp-search-pill.expanded .exp-search-icon-btn {
+  color: #a78bfa;
+}
+
+.exp-search-icon-btn {
+  width: 52px;
+  min-width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.35);
+  transition: color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.exp-search-icon-btn:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.exp-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #ffffff;
+  padding: 0 0 0 2px;
+  caret-color: #a78bfa;
+  min-width: 0;
+  width: 100%;
+  font-family: inherit;
+}
+
+.exp-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+  font-weight: 400;
+}
+
+.exp-search-input-wrapper {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: scaleX(0.7);
+  transform-origin: left center;
+  transition: opacity 0.25s ease 0.1s, transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0.05s;
+}
+
+.exp-search-pill.expanded .exp-search-input-wrapper {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.exp-search-clear-btn {
+  width: 34px;
+  height: 34px;
+  margin-right: 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 9999px;
+  transition: all 0.25s ease;
+  opacity: 0;
+  transform: scale(0.7);
+  pointer-events: none;
+}
+
+.exp-search-clear-btn.visible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.exp-search-clear-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.exp-search-badge {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.2);
+  padding: 0.15rem 0.6rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  margin-right: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  flex-shrink: 0;
+}
+
+.exp-search-badge.visible {
+  opacity: 1;
+}
+
+.exp-search-shortcut {
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  margin-right: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.exp-search-shortcut.visible {
+  opacity: 1;
+}
+
+@media (max-width: 480px) {
+  .exp-search-pill {
+    height: 46px;
+    min-width: 46px;
+  }
+  .exp-search-pill.expanded {
+    max-width: 100%;
+  }
+  .exp-search-icon-btn {
+    width: 46px;
+    min-width: 46px;
+    height: 46px;
+  }
+  .exp-search-icon-btn i {
+    font-size: 0.85rem !important;
+  }
+  .exp-search-input {
+    font-size: 0.85rem;
+  }
+  .exp-search-clear-btn {
+    width: 30px;
+    height: 30px;
+    margin-right: 4px;
+  }
+  .exp-search-shortcut {
+    display: none;
+  }
+}
+
+/* Light mode compatibility */
+body.light .exp-search-pill {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+body.light .exp-search-pill.expanded {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+body.light .exp-search-input {
+  color: #1a1e2c;
+}
+body.light .exp-search-input::placeholder {
+  color: rgba(0, 0, 0, 0.25);
+}
+body.light .exp-search-icon-btn {
+  color: rgba(0, 0, 0, 0.3);
+}
+body.light .exp-search-pill.expanded .exp-search-icon-btn {
+  color: #7c3aed;
+}
+body.light .exp-search-clear-btn {
+  background: rgba(0, 0, 0, 0.04);
+  color: rgba(0, 0, 0, 0.25);
+}
+body.light .exp-search-clear-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: #1a1e2c;
+}
