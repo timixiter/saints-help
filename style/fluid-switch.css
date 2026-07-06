@@ -1,0 +1,98 @@
+/* ============================================================
+   FLUID SEGMENT SWITCH - Filter Tabs
+   ReactAja Inspired
+   ============================================================ */
+
+.fluid-switch-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.25rem 0;
+  margin: 0.5rem 0 1.5rem 0;
+}
+
+.fluid-switch-track {
+  display: inline-flex;
+  position: relative;
+  background: rgba(255,255,255,0.04);
+  border-radius: 9999px;
+  padding: 0.3rem;
+  border: 1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
+  gap: 0.2rem;
+}
+
+.fluid-switch-item {
+  position: relative;
+  padding: 0.5rem 1.4rem;
+  border-radius: 9999px;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.35);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  z-index: 2;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.fluid-switch-item.active {
+  color: #ffffff;
+}
+
+.fluid-switch-item:hover:not(.active) {
+  color: rgba(255,255,255,0.6);
+}
+
+.fluid-switch-indicator {
+  position: absolute;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  box-shadow: 0 4px 16px rgba(79, 70, 229, 0.3);
+  transition: left 0.45s cubic-bezier(0.25, 0.8, 0.25, 1),
+              width 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 1;
+  will-change: left, width;
+}
+
+@media (max-width: 480px) {
+  .fluid-switch-item {
+    padding: 0.4rem 1rem;
+    font-size: 0.7rem;
+  }
+  .fluid-switch-track {
+    padding: 0.2rem;
+    gap: 0.1rem;
+  }
+  .fluid-switch-indicator {
+    top: 0.2rem;
+    bottom: 0.2rem;
+  }
+}
+
+body.light .fluid-switch-track {
+  background: rgba(255,255,255,0.4);
+  border-color: rgba(0,0,0,0.04);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+}
+body.light .fluid-switch-item {
+  color: rgba(0,0,0,0.3);
+}
+body.light .fluid-switch-item.active {
+  color: #1a1e2c;
+}
+body.light .fluid-switch-item:hover:not(.active) {
+  color: rgba(0,0,0,0.6);
+}
+body.light .fluid-switch-indicator {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  box-shadow: 0 4px 16px rgba(79, 70, 229, 0.15);
+}
