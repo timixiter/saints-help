@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+  <meta name="theme-color" content="#0b0e1a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Admin · INFORMATION SAINTS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  
+  <!-- ===== STYLE FOLDER ===== -->
+  <link rel="stylesheet" href="style/theme-customizer.css" />
+  
+  <style>
+    /* ===== RESET & GLOBAL ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0b0e1a;
+      color: #e5e9f0;
+      overflow-x: hidden;
+      min-height: 100vh;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      touch-action: manipulation;
+    }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+    ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 10px; }
+
+    /* ===== PARTICLES ===== */
+    #particles-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .app-wrapper {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container-custom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      width: 100%;
+    }
+    @media (max-width: 480px) {
+      .container-custom { padding: 0 0.9rem; }
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      backdrop-filter: blur(18px) saturate(1.2);
+      -webkit-backdrop-filter: blur(18px) saturate(1.2);
+      background: rgba(11, 14, 26, 0.6);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .header-logo {
+      filter: drop-shadow(0 0 16px rgba(79, 70, 229, 0.25));
+      transition: filter 0.3s;
+      flex-shrink: 0;
+    }
+    .header-logo:hover { filter: drop-shadow(0 0 28px rgba(79, 70, 229, 0.5)); }
+    .header-logo img {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 2px solid rgba(79, 70, 229, 0.4);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .glow-text {
+      text-shadow: 0 0 40px rgba(79, 70, 229, 0.2);
+    }
+    @media (max-width: 480px) {
+      .header-logo img { width: 34px; height: 34px; }
+      .header-logo span { font-size: 1.05rem; }
+    }
+
+    /* ===== GLASS CARD ===== */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.35s ease;
+    }
+    .glass-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(79, 70, 229, 0.08);
+    }
+
+    /* ===== FORM ===== */
+    .form-input {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 0.75rem;
+      padding: 0.7rem 1rem;
+      color: #e5e9f0;
+      width: 100%;
+      transition: all 0.3s;
+      outline: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+    .form-input:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    }
+    .form-input::placeholder {
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* ===== GLOWING BUTTON ===== */
+    .glowing-btn-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      outline: none;
+      user-select: none;
+      text-decoration: none;
+      box-sizing: border-box;
+      transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+      overflow: visible;
+      font-family: inherit;
+    }
+    .glowing-btn-wrapper:hover:not(:disabled) { transform: scale(1.025); }
+    .glowing-btn-wrapper:active:not(:disabled) { transform: scale(0.97); }
+    .glowing-btn-wrapper:disabled { cursor: not-allowed; opacity: 0.5; }
+
+    .glowing-btn-border-track {
+      position: absolute;
+      inset: 0;
+      padding: 1.5px;
+      overflow: hidden;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .shape-pill,
+    .shape-pill .glowing-btn-border-track,
+    .shape-pill .glowing-btn-content,
+    .shape-pill .glowing-btn-glow-layer {
+      border-radius: 9999px;
+    }
+    .shape-rounded,
+    .shape-rounded .glowing-btn-border-track,
+    .shape-rounded .glowing-btn-glow-layer {
+      border-radius: 12px;
+    }
+    .shape-rounded .glowing-btn-content {
+      border-radius: 10.5px;
+    }
+
+    .glowing-btn-spinner {
+      position: absolute;
+      top: -150%;
+      left: -150%;
+      width: 400%;
+      height: 400%;
+      transform-origin: center;
+    }
+    @keyframes glowing-btn-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .speed-slow .glowing-btn-spinner { animation: glowing-btn-spin 8s linear infinite; }
+    .speed-normal .glowing-btn-spinner { animation: glowing-btn-spin 4s linear infinite; }
+    .speed-fast .glowing-btn-spinner { animation: glowing-btn-spin 1.8s linear infinite; }
+
+    .preset-aurora .glowing-btn-spinner {
+      background: conic-gradient(from 0deg, transparent 0deg, #3b82f6 60deg, #d946ef 120deg, #8b5cf6 180deg, #06b6d4 240deg, #3b82f6 300deg, transparent 360deg);
+    }
+    .preset-cyber .glowing-btn-spinner {
+      background: conic-gradient(from 0deg, transparent 0deg, #10b981 30deg, transparent 70deg, transparent 180deg, #06b6d4 210deg, transparent 250deg, transparent 360deg);
+    }
+    .preset-ember .glowing-btn-spinner {
+      background: conic-gradient(from 0deg, transparent 0deg, #f97316 45deg, #ef4444 135deg, #eab308 225deg, #f97316 315deg, transparent 360deg);
+    }
+    .preset-glass .glowing-btn-spinner {
+      background: conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,0.05) 90deg, rgba(255,255,255,0.7) 180deg, rgba(255,255,255,0.05) 270deg, rgba(255,255,255,0.7) 360deg);
+    }
+
+    .glowing-btn-glow-layer {
+      position: absolute;
+      inset: -2px;
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      overflow: hidden;
+    }
+    .glow-none { display: none; }
+    .glow-low { filter: blur(8px); opacity: 0.35; }
+    .glow-medium { filter: blur(16px); opacity: 0.6; }
+    .glow-high { filter: blur(28px); opacity: 0.85; }
+    .glowing-btn-wrapper:hover:not(:disabled) .glow-low { opacity: 0.65; }
+    .glowing-btn-wrapper:hover:not(:disabled) .glow-medium { opacity: 0.85; }
+    .glowing-btn-wrapper:hover:not(:disabled) .glow-high { opacity: 1; }
+
+    .glowing-btn-content {
+      position: relative;
+      z-index: 2;
+      margin: 1.5px;
+      padding: 12px 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: #09090b;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .preset-glass .glowing-btn-content {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .glowing-btn-wrapper:hover:not(:disabled) .glowing-btn-content {
+      background: #121215;
+    }
+    .preset-glass.glowing-btn-wrapper:hover:not(:disabled) .glowing-btn-content {
+      background: rgba(255,255,255,0.07);
+    }
+
+    .glowing-btn-wrapper:focus-visible {
+      box-shadow: 0 0 0 3px #000, 0 0 0 5px rgba(255,255,255,0.55);
+    }
+    .glowing-btn-wrapper:disabled .glowing-btn-border-track {
+      background: rgba(255,255,255,0.05) !important;
+    }
+    .glowing-btn-wrapper:disabled .glowing-btn-spinner {
+      display: none !important;
+    }
+    .glowing-btn-wrapper:disabled .glowing-btn-glow-layer {
+      display: none !important;
+    }
+    .glowing-btn-wrapper:disabled .glowing-btn-content {
+      background: rgba(255,255,255,0.02) !important;
+      color: rgba(255,255,255,0.2) !important;
+    }
+
+    /* ===== ADMIN ITEMS ===== */
+    .admin-item {
+      background: rgba(255,255,255,0.025);
+      border-radius: 1rem;
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(255,255,255,0.03);
+      transition: all 0.3s ease;
+    }
+    .admin-item:hover {
+      background: rgba(79, 70, 229, 0.04);
+      border-color: rgba(79, 70, 229, 0.08);
+    }
+    .admin-item .item-title {
+      font-weight: 600;
+      font-size: 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .admin-item .item-excerpt {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.3);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ===== LOGIN ===== */
+    .login-box {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+    }
+    .login-box h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 0.3rem;
+    }
+    .login-box .sub {
+      text-align: center;
+      color: rgba(255,255,255,0.25);
+      font-size: 0.85rem;
+      margin-bottom: 2rem;
+    }
+    .login-error {
+      color: #f87171;
+      font-size: 0.85rem;
+      text-align: center;
+      margin-top: 0.8rem;
+      display: none;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .fade-in {
+      animation: fadeInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      opacity: 0;
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      border-top: 1px solid rgba(255,255,255,0.03);
+      padding: 1.5rem 0;
+      margin-top: 2.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.15);
+    }
+    .footer span { color: rgba(79, 70, 229, 0.4); font-weight: 600; }
+
+    /* Alert */
+    .alert {
+      padding: 0.9rem 1.2rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    .alert-success {
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.12);
+      color: #4ade80;
+    }
+    .alert-error {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.12);
+      color: #f87171;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.8rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 4px 20px rgba(79, 70, 229, 0.25);
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .btn-primary:active { transform: scale(0.95); }
+    .btn-primary:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 36px rgba(79, 70, 229, 0.4);
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #e5e9f0;
+      padding: 0.6rem 1.8rem;
+      border-radius: 9999px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .btn-secondary:hover {
+      background: rgba(79, 70, 229, 0.08);
+      transform: scale(1.04);
+    }
+
+    :root {
+      --theme-primary: #4f46e5;
+      --theme-secondary: #7c3aed;
+      --theme-accent: #06b6d4;
+    }
+
+    @supports (padding: max(0px)) {
+      .header { padding-top: max(0.75rem, env(safe-area-inset-top)); }
+      .app-wrapper { padding-bottom: env(safe-area-inset-bottom); }
+    }
+
+    @media (max-width: 480px) {
+      .login-box { padding: 2rem 1.2rem; }
+      .admin-item { flex-direction: column; align-items: flex-start !important; gap: 0.5rem; }
+      .admin-item .actions { align-self: flex-end; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== PARTICLES ===== -->
+  <canvas id="particles-canvas"></canvas>
+
+  <div class="app-wrapper">
+    <!-- ===== HEADER ===== -->
+    <header class="header sticky top-0 z-50">
+      <div class="container-custom flex flex-wrap items-center justify-between gap-3 py-3 md:py-4">
+        <a href="index.html" class="header-logo flex items-center gap-3 cursor-pointer group">
+          <img src="https://files.catbox.moe/4yfb2h.jpg" alt="INFORMATION SAINTS" />
+          <span class="text-lg md:text-2xl font-extrabold tracking-tight glow-text">INFORMATION SAINTS</span>
+        </a>
+        <div class="flex items-center gap-4">
+          <nav class="flex gap-3 text-sm md:text-base font-medium">
+            <a href="index.html" class="hover:text-indigo-400 transition">Home</a>
+            <a href="saints.html" class="hover:text-indigo-400 transition">Admin</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main class="flex-1 container-custom py-5 md:py-8" id="mainContent">
+      <!-- Rendered by JS -->
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <div class="container-custom">
+        <p>&copy; 2026 <span>INFORMATION SAINTS</span> — Admin Panel</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- JAVASCRIPT                                                    -->
+  <!-- ============================================================ -->
+  <script>
+    // ==================== PARTICLES ====================
+    (function initParticles() {
+      const canvas = document.getElementById('particles-canvas');
+      const ctx = canvas.getContext('2d');
+      let width, height, particles = [];
+      const NUM = 90;
+      let animId;
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * width;
+          this.y = Math.random() * height;
+          this.size = Math.random() * 2 + 0.3;
+          this.speedX = (Math.random() - 0.5) * 0.3;
+          this.speedY = (Math.random() - 0.5) * 0.3;
+          this.opacity = Math.random() * 0.5 + 0.15;
+        }
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          if (this.x < 0 || this.x > width) this.speedX *= -1;
+          if (this.y < 0 || this.y > height) this.speedY *= -1;
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+          ctx.fill();
+          ctx.shadowColor = 'rgba(79, 70, 229, 0.15)';
+          ctx.shadowBlur = 5;
+        }
+      }
+
+      for (let i = 0; i < NUM; i++) particles.push(new Particle());
+
+      function drawLines() {
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 130) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(79, 70, 229, ${0.05 * (1 - dist / 130)})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        drawLines();
+        animId = requestAnimationFrame(animate);
+      }
+      animate();
+
+      window.addEventListener('beforeunload', () => {
+        if (animId) cancelAnimationFrame(animId);
+      });
+    })();
+
+    // ==================== DATA ====================
+    const STORAGE_KEY = 'newsData';
+    const SESSION_KEY = 'adminSession';
+    const PASSWORD = 'SAINST X MIWATEAM';
+    const DEFAULT_NEWS = [
+      {
+        id: '1',
+        title: 'Welcome to INFORMATION SAINTS',
+        slug: 'welcome-to-information-saints',
+        content: 'This is the first article. Edit or delete it from the Admin panel.\n\nAll data is stored locally in your browser using localStorage.',
+        excerpt: 'Welcome to INFORMATION SAINTS – your trusted news source.',
+        image: 'https://files.catbox.moe/4yfb2h.jpg',
+        createdAt: new Date().toISOString()
+      }
+    ];
+
+    function getNews() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const data = JSON.parse(raw);
+          if (Array.isArray(data) && data.length) return data;
+        }
+      } catch {}
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_NEWS));
+      return [...DEFAULT_NEWS];
+    }
+
+    function saveNews(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function isAuthenticated() {
+      return localStorage.getItem(SESSION_KEY) === 'true';
+    }
+
+    function setAuthenticated(val) {
+      localStorage.setItem(SESSION_KEY, val ? 'true' : 'false');
+    }
+
+    function logout() {
+      setAuthenticated(false);
+      renderApp();
+    }
+
+    // ==================== RENDER ====================
+    function renderApp() {
+      const container = document.getElementById('mainContent');
+      if (!isAuthenticated()) {
+        renderLogin(container);
+      } else {
+        renderAdmin(container);
+      }
+    }
+
+    // ==================== LOGIN ====================
+    function renderLogin(container) {
+      container.innerHTML = `
+        <div class="fade-in">
+          <div class="login-box glass-card">
+            <h1>🔐 Admin Access</h1>
+            <p class="sub">Enter the password to manage articles</p>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+              <div class="mb-4">
+                <input type="password" id="passwordInput" class="form-input" placeholder="Enter password..." autofocus />
+              </div>
+              <button type="submit" class="glowing-btn-wrapper shape-pill speed-normal preset-cyber glow-medium w-full justify-center">
+                <div class="glowing-btn-glow-layer glow-medium"><div class="glowing-btn-spinner"></div></div>
+                <div class="glowing-btn-border-track"><div class="glowing-btn-spinner"></div></div>
+                <span class="glowing-btn-content"><i class="fas fa-unlock mr-2"></i> Unlock</span>
+              </button>
+              <div id="loginError" class="login-error">Incorrect password. Try again.</div>
+            </form>
+          </div>
+        </div>
+      `;
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const input = document.getElementById('passwordInput');
+      const error = document.getElementById('loginError');
+      if (input.value === PASSWORD) {
+        setAuthenticated(true);
+        renderApp();
+      } else {
+        error.style.display = 'block';
+        input.value = '';
+        input.focus();
+        setTimeout(() => { error.style.display = 'none'; }, 3000);
+      }
+    }
+
+    // ==================== ADMIN ====================
+    function renderAdmin(container) {
+      const news = getNews();
+      let html = `
+        <div class="max-w-4xl mx-auto fade-in">
+          <div class="flex items-center justify-between mb-6">
+            <h1 class="text-2xl md:text-3xl font-extrabold glow-text">⚙️ Admin Panel</h1>
+            <button onclick="logout()" class="glowing-btn-wrapper shape-pill speed-normal preset-ember glow-low">
+              <div class="glowing-btn-glow-layer glow-low"><div class="glowing-btn-spinner"></div></div>
+              <div class="glowing-btn-border-track"><div class="glowing-btn-spinner"></div></div>
+              <span class="glowing-btn-content"><i class="fas fa-sign-out-alt mr-2"></i> Logout</span>
+            </button>
+          </div>
+
+          <div id="adminAlert" style="display:none;" class="alert"></div>
+
+          <div class="glass-card p-5 md:p-7 mb-6">
+            <h2 class="text-xl font-bold mb-4" id="formTitle">➕ Add New Article</h2>
+            <form id="newsForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+              <input type="hidden" id="editId" />
+              <div>
+                <label class="block text-sm font-medium mb-1 text-gray-400">Title *</label>
+                <input type="text" id="formTitleInput" required class="form-input" placeholder="Article title..." />
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1 text-gray-400">Slug (URL)</label>
+                <input type="text" id="formSlug" class="form-input" placeholder="auto-generated from title" />
+                <p class="text-xs text-gray-500 mt-1">Leave blank to auto-generate</p>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1 text-gray-400">Content *</label>
+                <textarea id="formContent" rows="6" required class="form-input" placeholder="Write your article..."></textarea>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1 text-gray-400">Excerpt (summary)</label>
+                <textarea id="formExcerpt" rows="2" class="form-input" placeholder="Short summary (optional)"></textarea>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1 text-gray-400">Image URL</label>
+                <input type="url" id="formImage" class="form-input" placeholder="https://example.com/image.jpg" />
+              </div>
+              <div class="flex flex-wrap gap-3">
+                <button type="submit" class="glowing-btn-wrapper shape-pill speed-normal preset-aurora glow-medium" id="submitBtn">
+                  <div class="glowing-btn-glow-layer glow-medium"><div class="glowing-btn-spinner"></div></div>
+                  <div class="glowing-btn-border-track"><div class="glowing-btn-spinner"></div></div>
+                  <span class="glowing-btn-content"><i class="fas fa-paper-plane mr-2"></i> Publish Article</span>
+                </button>
+                <button type="button" onclick="resetForm()" class="glowing-btn-wrapper shape-pill speed-normal preset-glass glow-low" id="cancelBtn" style="display:none;">
+                  <div class="glowing-btn-glow-layer glow-low"><div class="glowing-btn-spinner"></div></div>
+                  <div class="glowing-btn-border-track"><div class="glowing-btn-spinner"></div></div>
+                  <span class="glowing-btn-content"><i class="fas fa-times mr-2"></i> Cancel</span>
+                </button>
+              </div>
+              <div id="formMessage" class="text-sm mt-2"></div>
+            </form>
+          </div>
+
+          <div>
+            <h2 class="text-xl font-bold mb-4">📋 All Articles (<span id="newsCount">${news.length}</span>)</h2>
+            <div id="newsList" class="space-y-3">
+              ${news.length === 0 ? '<p class="text-gray-500">No articles yet.</p>' : ''}
+              ${news.map(item => `
+                <div class="admin-item flex flex-wrap items-center justify-between gap-2">
+                  <div class="flex-1 min-w-0">
+                    <div class="item-title">${escapeHtml(item.title)}</div>
+                    <div class="item-excerpt">${escapeHtml(item.excerpt || item.content.slice(0, 70))}</div>
+                    <div class="text-xs text-gray-500 mt-1"><i class="far fa-calendar mr-1"></i>${formatDate(item.createdAt)}</div>
+                  </div>
+                  <div class="actions flex gap-2 flex-shrink-0">
+                    <button onclick="editNews('${item.id}')" class="glowing-btn-wrapper shape-pill speed-slow preset-glass glow-none" style="font-size:0.8rem; padding:0;">
+                      <div class="glowing-btn-border-track"><div class="glowing-btn-spinner"></div></div>
+                      <span class="glowing-btn-content" style="padding: 0.4rem 1rem; font-size:0.8rem;"><i class="fas fa-edit mr-1"></i>Edit</span>
+                    </button>
+                    <button onclick="deleteNews('${item.id}')" class="glowing-btn-wrapper shape-pill speed-slow preset-ember glow-none" style="font-size:0.8rem; padding:0;">
+                      <div class="glowing-btn-border-track"><div class="glowing-btn-spinner"></div></div>
+                      <span class="glowing-btn-content" style="padding: 0.4rem 1rem; font-size:0.8rem;"><i class="fas fa-trash mr-1"></i>Delete</span>
+                    </button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- ===== THEME CUSTOMIZER ===== -->
+          <div class="theme-customizer mt-8">
+            <div class="theme-customizer-title">🎨 Theme Customizer</div>
+            <div class="theme-customizer-row">
+              <div class="theme-customizer-group">
+                <label>Primary</label>
+                <input type="color" id="themePrimary" value="#4f46e5" />
+              </div>
+              <div class="theme-customizer-group">
+                <label>Secondary</label>
+                <input type="color" id="themeSecondary" value="#7c3aed" />
+              </div>
+              <div class="theme-customizer-group">
+                <label>Accent</label>
+                <input type="color" id="themeAccent" value="#06b6d4" />
+              </div>
+              <button class="theme-preset-btn active" data-preset="default">Default</button>
+              <button class="theme-preset-btn" data-preset="ocean">Ocean</button>
+              <button class="theme-preset-btn" data-preset="sunset">Sunset</button>
+              <button class="theme-preset-btn" data-preset="forest">Forest</button>
+            </div>
+            <div style="margin-top:0.8rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
+              <button class="btn-primary" onclick="applyTheme()">Apply Theme</button>
+              <button class="btn-secondary" onclick="resetTheme()">Reset</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+      initThemeCustomizer();
+    }
+
+    // ==================== THEME CUSTOMIZER ====================
+    function initThemeCustomizer() {
+      const primaryInput = document.getElementById('themePrimary');
+      const secondaryInput = document.getElementById('themeSecondary');
+      const accentInput = document.getElementById('themeAccent');
+      const presetBtns = document.querySelectorAll('.theme-preset-btn');
+
+      const savedTheme = localStorage.getItem('themeColors');
+      if (savedTheme) {
+        try {
+          const colors = JSON.parse(savedTheme);
+          if (primaryInput) primaryInput.value = colors.primary || '#4f46e5';
+          if (secondaryInput) secondaryInput.value = colors.secondary || '#7c3aed';
+          if (accentInput) accentInput.value = colors.accent || '#06b6d4';
+        } catch {}
+      }
+
+      const presets = {
+        default: { primary: '#4f46e5', secondary: '#7c3aed', accent: '#06b6d4' },
+        ocean: { primary: '#0ea5e9', secondary: '#0284c7', accent: '#22d3ee' },
+        sunset: { primary: '#f97316', secondary: '#ef4444', accent: '#eab308' },
+        forest: { primary: '#22c55e', secondary: '#16a34a', accent: '#84cc16' }
+      };
+
+      presetBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const preset = btn.dataset.preset;
+          const colors = presets[preset];
+          if (colors && primaryInput && secondaryInput && accentInput) {
+            primaryInput.value = colors.primary;
+            secondaryInput.value = colors.secondary;
+            accentInput.value = colors.accent;
+            presetBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+          }
+        });
+      });
+
+      [primaryInput, secondaryInput, accentInput].forEach(input => {
+        if (input) {
+          input.addEventListener('input', () => {
+            applyTheme();
+          });
+        }
+      });
+    }
+
+    function applyTheme() {
+      const primary = document.getElementById('themePrimary')?.value || '#4f46e5';
+      const secondary = document.getElementById('themeSecondary')?.value || '#7c3aed';
+      const accent = document.getElementById('themeAccent')?.value || '#06b6d4';
+
+      localStorage.setItem('themeColors', JSON.stringify({ primary, secondary, accent }));
+
+      document.documentElement.style.setProperty('--theme-primary', primary);
+      document.documentElement.style.setProperty('--theme-secondary', secondary);
+      document.documentElement.style.setProperty('--theme-accent', accent);
+
+      document.querySelectorAll('.glowing-btn-content, .glowing-btn-spinner, .fluid-switch-indicator, .profile-cover, .btn-primary').forEach(el => {
+        if (el.classList.contains('btn-primary') || el.classList.contains('glowing-btn-content')) {
+          el.style.background = `linear-gradient(135deg, ${primary}, ${secondary})`;
+        }
+        if (el.classList.contains('glowing-btn-spinner')) {
+          el.style.background = `conic-gradient(from 0deg, transparent 0deg, ${primary} 60deg, ${secondary} 120deg, ${accent} 180deg, ${primary} 300deg, transparent 360deg)`;
+        }
+        if (el.classList.contains('fluid-switch-indicator')) {
+          el.style.background = `linear-gradient(135deg, ${primary}, ${secondary})`;
+        }
+        if (el.classList.contains('profile-cover')) {
+          el.style.background = `linear-gradient(135deg, ${primary}, ${secondary}, ${accent})`;
+        }
+      });
+
+      document.querySelectorAll('.search-input-box.focused, .exp-search-pill.expanded').forEach(el => {
+        el.style.borderColor = primary;
+      });
+
+      showAlert('Theme applied successfully!', 'success');
+    }
+
+    function resetTheme() {
+      localStorage.removeItem('themeColors');
+      const primaryInput = document.getElementById('themePrimary');
+      const secondaryInput = document.getElementById('themeSecondary');
+      const accentInput = document.getElementById('themeAccent');
+      if (primaryInput) primaryInput.value = '#4f46e5';
+      if (secondaryInput) secondaryInput.value = '#7c3aed';
+      if (accentInput) accentInput.value = '#06b6d4';
+      applyTheme();
+      showAlert('Theme reset to default!', 'success');
+    }
+
+    // ==================== CRUD ====================
+    function generateSlug(title) {
+      return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+
+    function formatDate(iso) {
+      if (!iso) return '-';
+      try {
+        return new Date(iso).toLocaleDateString('en-US', {
+          year: 'numeric', month: 'short', day: 'numeric'
+        });
+      } catch { return iso; }
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function showAlert(msg, type) {
+      const el = document.getElementById('adminAlert');
+      if (!el) return;
+      el.textContent = msg;
+      el.className = `alert alert-${type}`;
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, 4000);
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('editId').value;
+      const title = document.getElementById('formTitleInput').value.trim();
+      const slugInput = document.getElementById('formSlug').value.trim();
+      const content = document.getElementById('formContent').value.trim();
+      const excerpt = document.getElementById('formExcerpt').value.trim();
+      const image = document.getElementById('formImage').value.trim();
+
+      if (!title || !content) {
+        showAlert('Title and content are required!', 'error');
+        return;
+      }
+
+      const slug = slugInput || generateSlug(title);
+      const news = getNews();
+
+      if (news.some(n => n.slug === slug && n.id !== id)) {
+        showAlert('Slug already exists!', 'error');
+        return;
+      }
+
+      const newItem = {
+        title,
+        slug,
+        content,
+        excerpt: excerpt || content.slice(0, 150),
+        image: image || '',
+        createdAt: new Date().toISOString()
+      };
+
+      if (id) {
+        const idx = news.findIndex(n => n.id === id);
+        if (idx !== -1) {
+          news[idx] = { ...news[idx], ...newItem };
+          saveNews(news);
+          showAlert('Article updated successfully!', 'success');
+        } else {
+          showAlert('Article not found!', 'error');
+        }
+      } else {
+        newItem.id = Date.now().toString();
+        news.push(newItem);
+        saveNews(news);
+        showAlert('Article published successfully!', 'success');
+      }
+
+      resetForm();
+      renderAdmin(document.getElementById('mainContent'));
+    }
+
+    function editNews(id) {
+      const news = getNews();
+      const item = news.find(n => n.id === id);
+      if (!item) return;
+
+      document.getElementById('editId').value = item.id;
+      document.getElementById('formTitleInput').value = item.title;
+      document.getElementById('formSlug').value = item.slug || '';
+      document.getElementById('formContent').value = item.content;
+      document.getElementById('formExcerpt').value = item.excerpt || '';
+      document.getElementById('formImage').value = item.image || '';
+      document.getElementById('formTitle').textContent = '✏️ Edit Article';
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.querySelector('.glowing-btn-content').innerHTML = '<i class="fas fa-sync mr-2"></i> Update Article';
+      submitBtn.className = 'glowing-btn-wrapper shape-pill speed-normal preset-cyber glow-medium';
+
+      document.getElementById('cancelBtn').style.display = 'inline-flex';
+      document.getElementById('formMessage').textContent = '';
+      document.querySelector('.glass-card').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function deleteNews(id) {
+      if (!confirm('Are you sure you want to delete this article?')) return;
+      let news = getNews();
+      news = news.filter(n => n.id !== id);
+      saveNews(news);
+      renderAdmin(document.getElementById('mainContent'));
+      showAlert('Article deleted!', 'success');
+    }
+
+    function resetForm() {
+      document.getElementById('editId').value = '';
+      document.getElementById('formTitleInput').value = '';
+      document.getElementById('formSlug').value = '';
+      document.getElementById('formContent').value = '';
+      document.getElementById('formExcerpt').value = '';
+      document.getElementById('formImage').value = '';
+      document.getElementById('formTitle').textContent = '➕ Add New Article';
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.querySelector('.glowing-btn-content').innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Publish Article';
+      submitBtn.className = 'glowing-btn-wrapper shape-pill speed-normal preset-aurora glow-medium';
+
+      document.getElementById('cancelBtn').style.display = 'none';
+      document.getElementById('formMessage').textContent = '';
+    }
+
+    // ==================== INIT ====================
+    document.addEventListener('DOMContentLoaded', () => {
+      getNews();
+      renderApp();
+    });
+
+    // Expose
+    window.handleLogin = handleLogin;
+    window.handleFormSubmit = handleFormSubmit;
+    window.editNews = editNews;
+    window.deleteNews = deleteNews;
+    window.resetForm = resetForm;
+    window.logout = logout;
+    window.applyTheme = applyTheme;
+    window.resetTheme = resetTheme;
+  </script>
+</body>
+</html>
