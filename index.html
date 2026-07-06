@@ -2,23 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
   <title>INFORMATION SAINTS</title>
+  <!-- Tailwind CSS via CDN (lightweight) -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome 6 (Free) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet" />
   <style>
-    /* ===== GLOBAL ===== */
+    /* ===== RESET & BASE ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #0b0e1a;
       color: #e5e9f0;
       overflow-x: hidden;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
-    ::-webkit-scrollbar { width: 6px; }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
 
     /* ===== PARTICLE CANVAS ===== */
     #particles-canvas {
@@ -28,9 +41,10 @@
       height: 100vh;
       z-index: 0;
       pointer-events: none;
+      will-change: transform;
     }
 
-    /* ===== LAYOUT ===== */
+    /* ===== APP WRAPPER ===== */
     .app-wrapper {
       position: relative;
       z-index: 1;
@@ -38,6 +52,7 @@
       display: flex;
       flex-direction: column;
     }
+
     .container-custom {
       max-width: 1200px;
       margin: 0 auto;
@@ -45,336 +60,431 @@
       width: 100%;
     }
 
-    /* ===== HEADER ===== */
+    /* ===== HEADER (Glass) ===== */
     .header {
-      backdrop-filter: blur(16px);
-      background: rgba(11, 14, 26, 0.7);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      background: rgba(11, 14, 26, 0.65);
       border-bottom: 1px solid rgba(255,255,255,0.06);
       box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      transition: background 0.3s;
     }
     .header-logo {
-      filter: drop-shadow(0 0 12px rgba(79, 70, 229, 0.3));
+      filter: drop-shadow(0 0 12px rgba(79, 70, 229, 0.25));
       transition: filter 0.3s;
     }
-    .header-logo:hover { filter: drop-shadow(0 0 20px rgba(79, 70, 229, 0.6)); }
+    .header-logo:hover { filter: drop-shadow(0 0 20px rgba(79, 70, 229, 0.5)); }
     .glow-text {
-      text-shadow: 0 0 40px rgba(79, 70, 229, 0.25);
+      text-shadow: 0 0 40px rgba(79, 70, 229, 0.2);
     }
 
     /* ===== GLASS CARD ===== */
     .glass-card {
       background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px) saturate(160%);
+      -webkit-backdrop-filter: blur(12px) saturate(160%);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 1.5rem;
       box-shadow: 0 8px 32px rgba(0,0,0,0.25);
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .glass-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 16px 48px rgba(79, 70, 229, 0.15);
+      box-shadow: 0 16px 48px rgba(79, 70, 229, 0.12);
     }
 
     /* ===== NEWS CARD ===== */
     .news-card {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.025);
+      backdrop-filter: blur(8px) saturate(140%);
+      -webkit-backdrop-filter: blur(8px) saturate(140%);
       border: 1px solid rgba(255, 255, 255, 0.05);
       border-radius: 1.2rem;
       overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       cursor: pointer;
+      will-change: transform;
     }
     .news-card:hover {
       transform: scale(1.02) translateY(-8px);
       border-color: rgba(79, 70, 229, 0.3);
-      box-shadow: 0 20px 60px rgba(79, 70, 229, 0.15);
+      box-shadow: 0 20px 60px rgba(79, 70, 229, 0.12);
     }
     .news-card img {
-      transition: transform 0.5s;
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      background: #1a1e2e;
     }
-    .news-card:hover img {
-      transform: scale(1.04);
+    .news-card:hover img { transform: scale(1.04); }
+    .news-card .card-body { padding: 1.25rem; }
+
+    /* ===== LINE CLAMP (fallback) ===== */
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     /* ===== ANIMATIONS ===== */
     .fade-in {
-      animation: fadeInUp 0.6s ease forwards;
+      animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
       opacity: 0;
     }
     @keyframes fadeInUp {
       0% { opacity: 0; transform: translateY(30px); }
       100% { opacity: 1; transform: translateY(0); }
     }
-    .fade-in-delay-1 { animation-delay: 0.1s; }
-    .fade-in-delay-2 { animation-delay: 0.2s; }
-    .fade-in-delay-3 { animation-delay: 0.3s; }
+    .fade-in-delay-1 { animation-delay: 0.08s; }
+    .fade-in-delay-2 { animation-delay: 0.16s; }
+    .fade-in-delay-3 { animation-delay: 0.24s; }
 
     /* ===== BUTTON ===== */
     .btn-primary {
       background: linear-gradient(135deg, #4f46e5, #7c3aed);
-      color: white;
+      color: #fff;
       border: none;
       padding: 0.6rem 1.8rem;
       border-radius: 9999px;
       font-weight: 600;
-      transition: all 0.3s;
-      box-shadow: 0 4px 16px rgba(79, 70, 229, 0.3);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(79, 70, 229, 0.25);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     .btn-primary:hover {
       transform: scale(1.04);
-      box-shadow: 0 8px 32px rgba(79, 70, 229, 0.5);
+      box-shadow: 0 8px 32px rgba(79, 70, 229, 0.4);
+    }
+    .btn-primary:active { transform: scale(0.96); }
+
+    /* ===== RESPONSIVE TWEAKS ===== */
+    @media (max-width: 640px) {
+      .container-custom { padding: 0 1rem; }
+      .header .container-custom { flex-wrap: wrap; gap: 0.5rem; }
+      .header-logo span { font-size: 1.1rem; }
+      .header-logo img { height: 2.25rem; width: 2.25rem; }
+      .news-card img { height: 160px; }
+      .glass-card { border-radius: 1.2rem; }
+    }
+    @media (max-width: 480px) {
+      .header-logo span { font-size: 1rem; }
+      .btn-primary { padding: 0.5rem 1.2rem; font-size: 0.9rem; }
     }
 
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 640px) {
-      .header .container-custom { flex-wrap: wrap; }
-      .header-logo span { font-size: 1.2rem; }
+    /* ===== SAFE AREA (iOS) ===== */
+    @supports (padding: max(0px)) {
+      .header { padding-top: max(0.75rem, env(safe-area-inset-top)); }
+      footer { padding-bottom: max(0.5rem, env(safe-area-inset-bottom)); }
+    }
+
+    /* ===== REDUCED MOTION ===== */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
   </style>
 </head>
 <body>
 
   <!-- ===== PARTICLE CANVAS ===== -->
-  <canvas id="particles-canvas"></canvas>
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
 
   <div class="app-wrapper">
     <!-- ===== HEADER ===== -->
-    <header class="header sticky top-0 z-50">
-      <div class="container-custom flex items-center justify-between py-3 md:py-4 flex-wrap gap-3">
-        <a href="#" onclick="navigate('home')" class="header-logo flex items-center gap-3 cursor-pointer group">
-          <img src="https://files.catbox.moe/4yfb2h.jpg" alt="Logo" class="h-10 w-10 rounded-full border-2 border-indigo-400 object-cover" />
+    <header class="header sticky top-0 z-50" role="banner">
+      <div class="container-custom flex items-center justify-between py-3 md:py-4 flex-wrap gap-2">
+        <a href="#" onclick="navigate('home')" class="header-logo flex items-center gap-3 cursor-pointer group" aria-label="INFORMATION SAINTS Home">
+          <img src="https://files.catbox.moe/4yfb2h.jpg" alt="INFORMATION SAINTS Logo" class="h-10 w-10 rounded-full border-2 border-indigo-400 object-cover" width="40" height="40" loading="lazy" />
           <span class="text-xl md:text-2xl font-bold tracking-wide glow-text">INFORMATION SAINTS</span>
         </a>
-        <nav class="flex gap-4 text-sm md:text-base font-medium">
-          <a href="#" onclick="navigate('home')" class="hover:text-indigo-400 transition">Home</a>
-          <a href="saints.html" class="hover:text-indigo-400 transition">Admin</a>
+        <nav class="flex gap-3 md:gap-4 text-sm md:text-base font-medium" aria-label="Main Navigation">
+          <a href="#" onclick="navigate('home')" class="hover:text-indigo-400 transition-colors">Home</a>
+          <a href="saints.html" class="hover:text-indigo-400 transition-colors">Admin</a>
         </nav>
       </div>
     </header>
 
-    <!-- ===== MAIN ===== -->
-    <main class="flex-1 container-custom py-8" id="mainContent">
-      <!-- Dinamis oleh JS -->
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="flex-1 container-custom py-6 md:py-8" id="mainContent" role="main">
+      <!-- Dinamis oleh JavaScript -->
     </main>
 
     <!-- ===== FOOTER ===== -->
-    <footer class="border-t border-white/5 py-6 mt-8 text-center text-sm text-gray-400">
+    <footer class="border-t border-white/5 py-5 mt-8 text-center text-xs md:text-sm text-gray-400" role="contentinfo">
       <div class="container-custom">
         <p>&copy; 2026 <span class="text-indigo-400 font-semibold">INFORMATION SAINTS</span> — All rights reserved.</p>
+        <p class="mt-1 opacity-60">Made with <i class="fas fa-heart text-red-400 text-xs"></i> &amp; vanilla JS</p>
       </div>
     </footer>
   </div>
 
+  <!-- ============================================================ -->
+  <!-- JAVASCRIPT - SEMUA LOGIKA (Ringan & Optimal)                  -->
+  <!-- ============================================================ -->
   <script>
-    // ==================== PARTICLES ====================
-    (function initParticles() {
-      const canvas = document.getElementById('particles-canvas');
-      const ctx = canvas.getContext('2d');
-      let width, height;
-      let particles = [];
-      const NUM = 120;
+    (function() {
+      'use strict';
 
-      function resize() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-      }
-      window.addEventListener('resize', resize);
-      resize();
+      // ==================== PARTICLES (Ringan) ====================
+      function initParticles() {
+        const canvas = document.getElementById('particles-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        const NUM = 80; // lebih ringan
 
-      class Particle {
-        constructor() {
-          this.x = Math.random() * width;
-          this.y = Math.random() * height;
-          this.size = Math.random() * 2.2 + 0.5;
-          this.speedX = (Math.random() - 0.5) * 0.4;
-          this.speedY = (Math.random() - 0.5) * 0.4;
-          this.opacity = Math.random() * 0.6 + 0.2;
+        function resize() {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
         }
-        update() {
-          this.x += this.speedX;
-          this.y += this.speedY;
-          if (this.x < 0 || this.x > width) this.speedX *= -1;
-          if (this.y < 0 || this.y > height) this.speedY *= -1;
-        }
-        draw() {
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-          ctx.fill();
-          ctx.shadowColor = 'rgba(79, 70, 229, 0.3)';
-          ctx.shadowBlur = 8;
-        }
-      }
+        window.addEventListener('resize', resize);
+        resize();
 
-      for (let i = 0; i < NUM; i++) particles.push(new Particle());
-
-      function drawLines() {
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 150) {
-              ctx.beginPath();
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = `rgba(79, 70, 229, ${0.08 * (1 - dist / 150)})`;
-              ctx.lineWidth = 0.6;
-              ctx.stroke();
+        class Particle {
+          constructor() {
+            this.reset();
+          }
+          reset() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.size = Math.random() * 2 + 0.8;
+            this.speedX = (Math.random() - 0.5) * 0.3;
+            this.speedY = (Math.random() - 0.5) * 0.3;
+            this.opacity = Math.random() * 0.4 + 0.15;
+          }
+          update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x < 0 || this.x > width) this.speedX *= -1;
+            if (this.y < 0 || this.y > height) this.speedY *= -1;
+          }
+          draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+            ctx.fill();
+            // soft glow (ringan)
+            if (this.size > 1.5) {
+              ctx.shadowColor = 'rgba(79, 70, 229, 0.15)';
+              ctx.shadowBlur = 6;
+            } else {
+              ctx.shadowBlur = 0;
             }
           }
         }
-      }
 
-      function animate() {
-        ctx.clearRect(0, 0, width, height);
-        particles.forEach(p => { p.update(); p.draw(); });
-        drawLines();
-        requestAnimationFrame(animate);
-      }
-      animate();
-    })();
+        for (let i = 0; i < NUM; i++) particles.push(new Particle());
 
-    // ==================== DATA ====================
-    const STORAGE_KEY = 'newsData';
-    const DEFAULT_NEWS = [
-      {
-        id: '1',
-        title: 'Welcome to INFORMATION SAINTS',
-        slug: 'welcome-to-information-saints',
-        content: 'This is the first article. Edit or delete it from the Admin panel. All data is stored locally in your browser.',
-        excerpt: 'Welcome to INFORMATION SAINTS – your trusted news source.',
-        image: 'https://files.catbox.moe/4yfb2h.jpg',
-        createdAt: new Date().toISOString()
-      }
-    ];
+        let animationFrame;
 
-    function getNews() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          const data = JSON.parse(raw);
-          if (Array.isArray(data) && data.length) return data;
+        function drawLines() {
+          for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+              const dx = particles[i].x - particles[j].x;
+              const dy = particles[i].y - particles[j].y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < 130) {
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.strokeStyle = `rgba(79, 70, 229, ${0.06 * (1 - dist / 130)})`;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+              }
+            }
+          }
         }
-      } catch {}
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_NEWS));
-      return [...DEFAULT_NEWS];
-    }
 
-    // ==================== NAVIGATION ====================
-    function navigate(page, param) {
-      if (page === 'detail' && param) {
-        window.location.hash = `detail/${param}`;
-      } else {
-        window.location.hash = '';
-      }
-      renderPage(page, param);
-    }
+        function animate() {
+          ctx.clearRect(0, 0, width, height);
+          particles.forEach(p => { p.update(); p.draw(); });
+          drawLines();
+          animationFrame = requestAnimationFrame(animate);
+        }
 
-    function renderPage(page, param) {
-      const container = document.getElementById('mainContent');
-      container.style.opacity = '0';
-      container.style.transform = 'translateY(20px)';
-      setTimeout(() => {
-        if (page === 'home') renderHome(container);
-        else if (page === 'detail' && param) renderDetail(container, param);
-        else renderHome(container);
-        container.style.opacity = '1';
-        container.style.transform = 'translateY(0)';
-        container.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-      }, 120);
-    }
+        animate();
 
-    // ---------- HOME ----------
-    function renderHome(container) {
-      const news = getNews();
-      if (!news.length) {
-        container.innerHTML = `
-          <div class="text-center py-20 fade-in">
-            <h1 class="text-4xl font-bold glow-text text-indigo-300">No News Yet</h1>
-            <p class="text-gray-400 mt-3">Go to <a href="saints.html" class="text-indigo-400 hover:underline">Admin</a> to add your first article.</p>
-          </div>
-        `;
-        return;
+        // Cleanup on page hide (optional)
+        window.addEventListener('beforeunload', () => {
+          if (animationFrame) cancelAnimationFrame(animationFrame);
+        });
       }
 
-      let cards = news.map((item, idx) => `
-        <div class="news-card fade-in fade-in-delay-${idx % 3 + 1}" onclick="navigate('detail','${item.slug}')">
-          ${item.image ? `<img src="${item.image}" alt="${item.title}" class="w-full h-52 object-cover" />` : ''}
-          <div class="p-5">
-            <h2 class="text-xl font-bold mb-2 line-clamp-2">${item.title}</h2>
-            <p class="text-gray-400 text-sm line-clamp-3">${item.excerpt || item.content.slice(0, 150) + '…'}</p>
-            <div class="flex items-center justify-between mt-4 text-xs text-gray-500">
-              <span><i class="far fa-calendar mr-1"></i>${formatDate(item.createdAt)}</span>
-              <span><i class="far fa-clock mr-1"></i>${Math.ceil(item.content.length / 200)} min read</span>
+      // ==================== DATA LAYER ====================
+      const STORAGE_KEY = 'newsData';
+      const DEFAULT_NEWS = [
+        {
+          id: '1',
+          title: 'Welcome to INFORMATION SAINTS',
+          slug: 'welcome-to-information-saints',
+          content: 'This is the first article. Edit or delete it from the Admin panel. All data is stored locally in your browser.\n\nFeel free to add more news with images and rich content.',
+          excerpt: 'Welcome to INFORMATION SAINTS – your trusted news source.',
+          image: 'https://files.catbox.moe/4yfb2h.jpg',
+          createdAt: new Date().toISOString()
+        }
+      ];
+
+      function getNews() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const data = JSON.parse(raw);
+            if (Array.isArray(data) && data.length) return data;
+          }
+        } catch (_) { /* ignore */ }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_NEWS));
+        return [...DEFAULT_NEWS];
+      }
+
+      // ==================== NAVIGATION ====================
+      let currentPage = 'home';
+
+      function navigate(page, param) {
+        if (page === 'detail' && param) {
+          window.location.hash = `detail/${encodeURIComponent(param)}`;
+        } else {
+          window.location.hash = '';
+        }
+        renderPage(page, param);
+      }
+
+      function renderPage(page, param) {
+        const container = document.getElementById('mainContent');
+        if (!container) return;
+
+        // Smooth transition
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(16px)';
+        container.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+
+        setTimeout(() => {
+          if (page === 'home') renderHome(container);
+          else if (page === 'detail' && param) renderDetail(container, param);
+          else renderHome(container);
+
+          container.style.opacity = '1';
+          container.style.transform = 'translateY(0)';
+        }, 80);
+      }
+
+      // ==================== RENDER HOME ====================
+      function renderHome(container) {
+        const news = getNews();
+        if (!news.length) {
+          container.innerHTML = `
+            <div class="text-center py-16 md:py-24 fade-in">
+              <h1 class="text-3xl md:text-5xl font-bold glow-text text-indigo-300">No News Yet</h1>
+              <p class="text-gray-400 mt-4">Go to <a href="saints.html" class="text-indigo-400 hover:underline font-medium">Admin</a> to add your first article.</p>
             </div>
-          </div>
-        </div>
-      `).join('');
+          `;
+          return;
+        }
 
-      container.innerHTML = `
-        <div class="mb-8">
-          <h1 class="text-3xl md:text-4xl font-bold glow-text">📰 Latest News</h1>
-          <p class="text-gray-400 mt-1">Stay informed with the latest stories</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">${cards}</div>
-      `;
-    }
+        const cards = news.map((item, idx) => {
+          const delayClass = `fade-in-delay-${(idx % 3) + 1}`;
+          const imageHtml = item.image
+            ? `<img src="${item.image}" alt="${item.title}" loading="lazy" width="400" height="200" />`
+            : `<div class="h-52 bg-gradient-to-br from-indigo-900/30 to-purple-900/30 flex items-center justify-center text-gray-500"><i class="fas fa-image text-3xl opacity-30"></i></div>`;
 
-    // ---------- DETAIL ----------
-    function renderDetail(container, slug) {
-      const news = getNews();
-      const item = news.find(n => n.slug === slug);
-      if (!item) {
+          return `
+            <div class="news-card fade-in ${delayClass}" onclick="navigate('detail','${encodeURIComponent(item.slug)}')" role="button" tabindex="0" aria-label="Read ${item.title}">
+              ${imageHtml}
+              <div class="card-body">
+                <h2 class="text-xl font-bold mb-2 line-clamp-2">${item.title}</h2>
+                <p class="text-gray-400 text-sm line-clamp-3">${item.excerpt || item.content.slice(0, 150) + '…'}</p>
+                <div class="flex items-center justify-between mt-4 text-xs text-gray-500">
+                  <span><i class="far fa-calendar mr-1" aria-hidden="true"></i>${formatDate(item.createdAt)}</span>
+                  <span><i class="far fa-clock mr-1" aria-hidden="true"></i>${Math.ceil(item.content.length / 200)} min read</span>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
         container.innerHTML = `
-          <div class="text-center py-20 fade-in">
-            <h2 class="text-3xl font-bold text-red-400">Article Not Found</h2>
-            <a href="#" onclick="navigate('home')" class="text-indigo-400 hover:underline mt-4 inline-block">← Back to Home</a>
+          <div class="mb-8 fade-in">
+            <h1 class="text-3xl md:text-4xl font-bold glow-text">📰 Latest News</h1>
+            <p class="text-gray-400 mt-1">Stay informed with the latest stories</p>
           </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">${cards}</div>
         `;
-        return;
       }
 
-      container.innerHTML = `
-        <article class="max-w-3xl mx-auto glass-card p-6 md:p-8 fade-in">
-          <a href="#" onclick="navigate('home')" class="text-indigo-400 hover:underline inline-block mb-4"><i class="fas fa-arrow-left mr-2"></i>Back</a>
-          ${item.image ? `<img src="${item.image}" alt="${item.title}" class="w-full h-64 object-cover rounded-xl mb-6" />` : ''}
-          <h1 class="text-3xl md:text-4xl font-bold glow-text mb-3">${item.title}</h1>
-          <div class="text-sm text-gray-400 mb-6"><i class="far fa-calendar mr-2"></i>${formatDate(item.createdAt)}</div>
-          <div class="prose max-w-none text-gray-300 whitespace-pre-wrap leading-relaxed">${item.content}</div>
-        </article>
-      `;
-    }
+      // ==================== RENDER DETAIL ====================
+      function renderDetail(container, slug) {
+        const news = getNews();
+        const item = news.find(n => n.slug === slug);
+        if (!item) {
+          container.innerHTML = `
+            <div class="text-center py-16 md:py-24 fade-in">
+              <h2 class="text-3xl font-bold text-red-400">Article Not Found</h2>
+              <a href="#" onclick="navigate('home')" class="text-indigo-400 hover:underline mt-4 inline-block"><i class="fas fa-arrow-left mr-2"></i>Back to Home</a>
+            </div>
+          `;
+          return;
+        }
 
-    // ==================== HELPERS ====================
-    function formatDate(iso) {
-      if (!iso) return '-';
-      try {
-        return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-      } catch { return iso; }
-    }
+        const imageHtml = item.image
+          ? `<img src="${item.image}" alt="${item.title}" class="w-full h-56 md:h-72 object-cover rounded-xl mb-6" loading="lazy" />`
+          : '';
 
-    // ==================== HASH ROUTING ====================
-    function handleHash() {
-      const hash = window.location.hash.slice(1);
-      if (hash.startsWith('detail/')) {
-        const slug = hash.replace('detail/', '');
-        navigate('detail', slug);
-      } else {
-        navigate('home');
+        container.innerHTML = `
+          <article class="max-w-3xl mx-auto glass-card p-5 md:p-8 fade-in">
+            <a href="#" onclick="navigate('home')" class="text-indigo-400 hover:underline inline-block mb-4"><i class="fas fa-arrow-left mr-2"></i>Back</a>
+            ${imageHtml}
+            <h1 class="text-2xl md:text-4xl font-bold glow-text mb-3">${item.title}</h1>
+            <div class="text-sm text-gray-400 mb-6"><i class="far fa-calendar mr-2" aria-hidden="true"></i>${formatDate(item.createdAt)}</div>
+            <div class="prose max-w-none text-gray-300 whitespace-pre-wrap leading-relaxed">${item.content}</div>
+          </article>
+        `;
       }
-    }
 
-    window.addEventListener('hashchange', handleHash);
-    window.addEventListener('DOMContentLoaded', () => {
-      getNews();
-      handleHash();
-    });
+      // ==================== HELPERS ====================
+      function formatDate(iso) {
+        if (!iso) return '-';
+        try {
+          return new Date(iso).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          });
+        } catch (_) { return iso; }
+      }
 
-    window.navigate = navigate;
+      // ==================== HASH ROUTING ====================
+      function handleHash() {
+        const hash = window.location.hash.slice(1);
+        if (hash.startsWith('detail/')) {
+          const slug = decodeURIComponent(hash.replace('detail/', ''));
+          navigate('detail', slug);
+        } else {
+          navigate('home');
+        }
+      }
+
+      // ==================== INIT ====================
+      window.addEventListener('hashchange', handleHash);
+      window.addEventListener('DOMContentLoaded', () => {
+        getNews(); // ensure default
+        initParticles();
+        handleHash();
+      });
+
+      // Expose navigate globally
+      window.navigate = navigate;
+
+    })();
   </script>
 </body>
 </html>
