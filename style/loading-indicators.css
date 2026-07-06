@@ -1,0 +1,205 @@
+/* ============================================================
+   LOADING INDICATORS - Skeleton + Gyroscope Spinner
+   ReactAja Inspired
+   ============================================================ */
+
+.skeleton-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 0.5rem 0;
+}
+
+.skeleton-card {
+  background: rgba(255,255,255,0.02);
+  border-radius: 1.2rem;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.03);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 180px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 0.8rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-line {
+  height: 1rem;
+  background: rgba(255,255,255,0.04);
+  border-radius: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-line.short { width: 60%; }
+.skeleton-line.medium { width: 80%; }
+.skeleton-line.long { width: 95%; }
+
+.skeleton-line + .skeleton-line { margin-top: 0.6rem; }
+
+.skeleton-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.02) 25%,
+    rgba(255,255,255,0.04) 50%,
+    rgba(255,255,255,0.02) 75%,
+    transparent 100%
+  );
+  animation: shimmerMove 1.8s ease-in-out infinite;
+}
+
+@keyframes shimmerMove {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(250%); }
+}
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.gyro-spinner-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 0;
+  width: 100%;
+}
+
+.gyro-spinner {
+  width: 56px;
+  height: 56px;
+  position: relative;
+  border-radius: 50%;
+}
+
+.gyro-spinner-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2.5px solid transparent;
+  border-top-color: #4f46e5;
+  animation: gyroSpin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+.gyro-spinner-ring:nth-child(2) {
+  width: 70%;
+  height: 70%;
+  top: 15%;
+  left: 15%;
+  border-top-color: #7c3aed;
+  animation-duration: 1.8s;
+  animation-direction: reverse;
+}
+
+.gyro-spinner-ring:nth-child(3) {
+  width: 40%;
+  height: 40%;
+  top: 30%;
+  left: 30%;
+  border-top-color: #06b6d4;
+  animation-duration: 2.4s;
+}
+
+@keyframes gyroSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.gyro-spinner-label {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.25);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  animation: pulseLabel 1.8s ease-in-out infinite;
+}
+
+@keyframes pulseLabel {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.skeleton-detail {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  background: rgba(255,255,255,0.02);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+.skeleton-detail .skeleton-image {
+  height: 240px;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.skeleton-detail .skeleton-line {
+  height: 1.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.skeleton-detail .skeleton-line.long { width: 95%; }
+.skeleton-detail .skeleton-line.medium { width: 70%; }
+
+@media (max-width: 640px) {
+  .skeleton-grid {
+    grid-template-columns: 1fr;
+  }
+  .skeleton-image {
+    height: 140px;
+  }
+  .skeleton-detail .skeleton-image {
+    height: 180px;
+  }
+  .gyro-spinner {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+body.light .skeleton-card,
+body.light .skeleton-detail {
+  background: rgba(255,255,255,0.4);
+  border-color: rgba(0,0,0,0.04);
+}
+body.light .skeleton-image,
+body.light .skeleton-line {
+  background: rgba(0,0,0,0.05);
+}
+body.light .skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.2) 25%,
+    rgba(255,255,255,0.5) 50%,
+    rgba(255,255,255,0.2) 75%,
+    transparent 100%
+  );
+}
+body.light .gyro-spinner-ring {
+  border-top-color: #4f46e5;
+}
+body.light .gyro-spinner-ring:nth-child(2) {
+  border-top-color: #7c3aed;
+}
+body.light .gyro-spinner-ring:nth-child(3) {
+  border-top-color: #06b6d4;
+}
