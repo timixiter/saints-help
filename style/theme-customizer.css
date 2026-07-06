@@ -1,0 +1,136 @@
+/* ============================================================
+   THEME CUSTOMIZER - Admin Panel
+   ReactAja Inspired
+   ============================================================ */
+
+.theme-customizer {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 1.2rem;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.theme-customizer-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1rem;
+}
+
+.theme-customizer-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.theme-customizer-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.theme-customizer-group label {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.3);
+  font-weight: 500;
+}
+
+.theme-customizer-group input[type="color"] {
+  width: 36px;
+  height: 36px;
+  border: 2px solid rgba(255,255,255,0.06);
+  border-radius: 50%;
+  padding: 2px;
+  cursor: pointer;
+  background: transparent;
+  transition: border-color 0.3s;
+}
+
+.theme-customizer-group input[type="color"]:hover {
+  border-color: rgba(255,255,255,0.15);
+}
+
+.theme-customizer-group input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.theme-customizer-group input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+.theme-preset-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 9999px;
+  padding: 0.3rem 1rem;
+  color: rgba(255,255,255,0.4);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.theme-preset-btn:hover {
+  background: rgba(79,70,229,0.08);
+  border-color: rgba(79,70,229,0.15);
+  color: #fff;
+}
+
+.theme-preset-btn.active {
+  background: rgba(79,70,229,0.12);
+  border-color: rgba(79,70,229,0.2);
+  color: #a78bfa;
+}
+
+@media (max-width: 480px) {
+  .theme-customizer {
+    padding: 1rem;
+  }
+  .theme-customizer-row {
+    gap: 0.8rem;
+  }
+  .theme-customizer-group label {
+    font-size: 0.7rem;
+  }
+  .theme-customizer-group input[type="color"] {
+    width: 30px;
+    height: 30px;
+  }
+  .theme-preset-btn {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.7rem;
+  }
+}
+
+body.light .theme-customizer {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(0,0,0,0.04);
+}
+body.light .theme-customizer-title {
+  color: rgba(0,0,0,0.3);
+}
+body.light .theme-customizer-group label {
+  color: rgba(0,0,0,0.25);
+}
+body.light .theme-customizer-group input[type="color"] {
+  border-color: rgba(0,0,0,0.06);
+}
+body.light .theme-preset-btn {
+  color: rgba(0,0,0,0.3);
+  border-color: rgba(0,0,0,0.04);
+}
+body.light .theme-preset-btn:hover {
+  background: rgba(79,70,229,0.04);
+  color: #1a1e2c;
+}
+body.light .theme-preset-btn.active {
+  background: rgba(79,70,229,0.06);
+  border-color: rgba(79,70,229,0.1);
+  color: #4f46e5;
+}
