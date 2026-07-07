@@ -211,7 +211,7 @@
     }
 
     /* ============================================================
-       GLOWING BUTTON - TANPA BLUR (solid glow)
+       GLOWING BUTTON - EXACT MATCH dari kode React yang diberikan
        ============================================================ */
     .glowing-btn-wrapper {
       position: relative;
@@ -228,27 +228,27 @@
       box-sizing: border-box;
       transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
       overflow: visible;
-      font-family: inherit;
     }
+
     .glowing-btn-wrapper:hover:not(:disabled) {
       transform: scale(1.025);
     }
+
     .glowing-btn-wrapper:active:not(:disabled) {
       transform: scale(0.97);
     }
+
     .glowing-btn-wrapper:disabled {
       cursor: not-allowed;
-      opacity: 0.5;
     }
 
     .glowing-btn-border-track {
       position: absolute;
       inset: 0;
-      padding: 2px;
+      padding: 1.5px;
       overflow: hidden;
       z-index: 1;
       pointer-events: none;
-      border-radius: inherit;
     }
 
     .shape-pill,
@@ -257,6 +257,7 @@
     .shape-pill .glowing-btn-glow-layer {
       border-radius: 9999px;
     }
+
     .shape-rounded,
     .shape-rounded .glowing-btn-border-track,
     .shape-rounded .glowing-btn-glow-layer {
@@ -274,6 +275,7 @@
       height: 400%;
       transform-origin: center;
     }
+
     @keyframes glowing-btn-spin {
       0% {
         transform: rotate(0deg);
@@ -282,6 +284,7 @@
         transform: rotate(360deg);
       }
     }
+
     .speed-slow .glowing-btn-spinner {
       animation: glowing-btn-spin 8s linear infinite;
     }
@@ -295,47 +298,49 @@
     .preset-aurora .glowing-btn-spinner {
       background: conic-gradient(from 0deg, transparent 0deg, #3b82f6 60deg, #d946ef 120deg, #8b5cf6 180deg, #06b6d4 240deg, #3b82f6 300deg, transparent 360deg);
     }
+
     .preset-cyber .glowing-btn-spinner {
       background: conic-gradient(from 0deg, transparent 0deg, #10b981 30deg, transparent 70deg, transparent 180deg, #06b6d4 210deg, transparent 250deg, transparent 360deg);
     }
+
     .preset-ember .glowing-btn-spinner {
       background: conic-gradient(from 0deg, transparent 0deg, #f97316 45deg, #ef4444 135deg, #eab308 225deg, #f97316 315deg, transparent 360deg);
     }
+
     .preset-glass .glowing-btn-spinner {
       background: conic-gradient(from 0deg, transparent 0deg, rgba(255, 255, 255, 0.05) 90deg, rgba(255, 255, 255, 0.7) 180deg, rgba(255, 255, 255, 0.05) 270deg, rgba(255, 255, 255, 0.7) 360deg);
     }
 
-    /* ===== GLOW LAYER - TANPA BLUR (solid) ===== */
     .glowing-btn-glow-layer {
       position: absolute;
-      inset: -1px;
+      inset: -2px;
       z-index: 0;
       pointer-events: none;
       transition: opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       overflow: hidden;
-      border-radius: inherit;
-      will-change: opacity;
     }
+
     .glow-none {
-      display: none !important;
+      display: none;
     }
     .glow-low {
-      filter: blur(0px);
-      opacity: 0.3;
+      filter: blur(8px);
+      opacity: 0.35;
     }
     .glow-medium {
-      filter: blur(0px);
-      opacity: 0.5;
+      filter: blur(16px);
+      opacity: 0.6;
     }
     .glow-high {
-      filter: blur(0px);
-      opacity: 0.7;
+      filter: blur(28px);
+      opacity: 0.85;
     }
+
     .glowing-btn-wrapper:hover:not(:disabled) .glow-low {
-      opacity: 0.5;
+      opacity: 0.65;
     }
     .glowing-btn-wrapper:hover:not(:disabled) .glow-medium {
-      opacity: 0.75;
+      opacity: 0.85;
     }
     .glowing-btn-wrapper:hover:not(:disabled) .glow-high {
       opacity: 1;
@@ -344,35 +349,38 @@
     .glowing-btn-content {
       position: relative;
       z-index: 2;
-      margin: 2px;
+      margin: 1.5px;
       padding: 12px 28px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      font-family: inherit;
-      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
       font-weight: 600;
       color: #ffffff;
       background: #09090b;
       transition: background 0.3s ease, color 0.3s ease;
-      border-radius: inherit;
     }
+
     .preset-glass .glowing-btn-content {
       background: rgba(255, 255, 255, 0.03);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
+
     .glowing-btn-wrapper:hover:not(:disabled) .glowing-btn-content {
       background: #121215;
     }
+
     .preset-glass.glowing-btn-wrapper:hover:not(:disabled) .glowing-btn-content {
       background: rgba(255, 255, 255, 0.07);
     }
 
     .glowing-btn-wrapper:focus-visible {
-      box-shadow: 0 0 0 3px #000, 0 0 0 5px rgba(255, 255, 255, 0.55);
+      box-shadow: 0 0 0 3px #000000, 0 0 0 5px rgba(255, 255, 255, 0.55);
     }
+
     .glowing-btn-wrapper:disabled .glowing-btn-border-track {
       background: rgba(255, 255, 255, 0.05) !important;
     }
@@ -603,7 +611,6 @@
       transform: translateY(0);
     }
 
-    /* Stagger via nth-child */
     .cinematic-blur-char:nth-child(1) {
       transition-delay: 0.00s;
     }
@@ -1270,7 +1277,7 @@
   <!-- ============================================================ -->
   <script>
     // ================================================================
-    // 1. PARTICLES (Canvas)
+    // 1. PARTICLES
     // ================================================================
     (function initParticles() {
       var canvas = document.getElementById('particles-canvas');
@@ -1683,7 +1690,7 @@
     }
 
     // ================================================================
-    // 6. DECRYPTION TEXT (hover effect)
+    // 6. DECRYPTION TEXT
     // ================================================================
     function initDecryptionEffect() {
       var triggers = document.querySelectorAll('.decrypt-trigger');
@@ -1807,8 +1814,8 @@
           'Go to Admin to add your first article.') + '</p>';
         if (searchQueryParam) {
           html +=
-            '  <button class="glowing-btn-wrapper shape-pill speed-normal preset-ember glow-low mt-4" onclick="clearSearch()">';
-          html += '    <div class="glowing-btn-glow-layer glow-low"><div class="glowing-btn-spinner"></div></div>';
+            '  <button class="glowing-btn-wrapper shape-pill speed-fast preset-ember glow-medium mt-4" onclick="clearSearch()">';
+          html += '    <div class="glowing-btn-glow-layer glow-medium"><div class="glowing-btn-spinner"></div></div>';
           html += '    <div class="glowing-btn-border-track"><div class="glowing-btn-spinner"></div></div>';
           html += '    <span class="glowing-btn-content"><i class="fas fa-times mr-2"></i> Clear Search</span>';
           html += '  </button>';
@@ -1841,7 +1848,7 @@
         html += '</div>';
       }
 
-      // Profile Card
+      // Profile Card with Glowing Button (using glass preset)
       html += '<div class="mt-12 flex justify-center">';
       html += '  <div class="profile-card">';
       html += '    <div class="profile-cover"></div>';
@@ -1862,8 +1869,8 @@
       html += '    </div>';
       html += '    <div class="profile-action">';
       html +=
-        '      <button class="glowing-btn-wrapper shape-pill speed-normal preset-aurora glow-low w-full justify-center" onclick="navigate(\'home\')">';
-      html += '        <div class="glowing-btn-glow-layer glow-low"><div class="glowing-btn-spinner"></div></div>';
+        '      <button class="glowing-btn-wrapper shape-pill speed-fast preset-glass glow-medium w-full justify-center" onclick="navigate(\'home\')">';
+      html += '        <div class="glowing-btn-glow-layer glow-medium"><div class="glowing-btn-spinner"></div></div>';
       html += '        <div class="glowing-btn-border-track"><div class="glowing-btn-spinner"></div></div>';
       html += '        <span class="glowing-btn-content"><i class="fas fa-globe-americas mr-2"></i> Explore All</span>';
       html += '      </button>';
