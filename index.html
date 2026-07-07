@@ -211,7 +211,7 @@
     }
 
     /* ============================================================
-       GLOWING BUTTON - REACT AJA INSPIRED (TAJAM & TIDAK BURAM)
+       GLOWING BUTTON - TANPA BLUR (solid glow)
        ============================================================ */
     .glowing-btn-wrapper {
       position: relative;
@@ -241,7 +241,6 @@
       opacity: 0.5;
     }
 
-    /* Border track - lapisan luar yang berputar */
     .glowing-btn-border-track {
       position: absolute;
       inset: 0;
@@ -252,7 +251,6 @@
       border-radius: inherit;
     }
 
-    /* Shape */
     .shape-pill,
     .shape-pill .glowing-btn-border-track,
     .shape-pill .glowing-btn-content,
@@ -268,7 +266,6 @@
       border-radius: 10.5px;
     }
 
-    /* Spinner - gradient berputar */
     .glowing-btn-spinner {
       position: absolute;
       top: -150%;
@@ -295,7 +292,6 @@
       animation: glowing-btn-spin 1.8s linear infinite;
     }
 
-    /* Preset warna (sesuai ReactAja) */
     .preset-aurora .glowing-btn-spinner {
       background: conic-gradient(from 0deg, transparent 0deg, #3b82f6 60deg, #d946ef 120deg, #8b5cf6 180deg, #06b6d4 240deg, #3b82f6 300deg, transparent 360deg);
     }
@@ -309,7 +305,7 @@
       background: conic-gradient(from 0deg, transparent 0deg, rgba(255, 255, 255, 0.05) 90deg, rgba(255, 255, 255, 0.7) 180deg, rgba(255, 255, 255, 0.05) 270deg, rgba(255, 255, 255, 0.7) 360deg);
     }
 
-    /* ===== FIX: GLOW LAYER - TAJAM & TIDAK BURAM ===== */
+    /* ===== GLOW LAYER - TANPA BLUR (solid) ===== */
     .glowing-btn-glow-layer {
       position: absolute;
       inset: -1px;
@@ -323,30 +319,28 @@
     .glow-none {
       display: none !important;
     }
-    /* Blur minimal agar glow tetap terlihat tapi tidak buram */
     .glow-low {
-      filter: blur(2px);
+      filter: blur(0px);
       opacity: 0.3;
     }
     .glow-medium {
-      filter: blur(4px);
-      opacity: 0.45;
+      filter: blur(0px);
+      opacity: 0.5;
     }
     .glow-high {
-      filter: blur(6px);
-      opacity: 0.6;
+      filter: blur(0px);
+      opacity: 0.7;
     }
     .glowing-btn-wrapper:hover:not(:disabled) .glow-low {
       opacity: 0.5;
     }
     .glowing-btn-wrapper:hover:not(:disabled) .glow-medium {
-      opacity: 0.7;
+      opacity: 0.75;
     }
     .glowing-btn-wrapper:hover:not(:disabled) .glow-high {
-      opacity: 0.85;
+      opacity: 1;
     }
 
-    /* Inner content - tampilan tombol */
     .glowing-btn-content {
       position: relative;
       z-index: 2;
@@ -1201,7 +1195,6 @@
       }
     }
 
-    /* Fade in animation untuk kartu */
     .fade-in {
       animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
       opacity: 0;
@@ -1226,9 +1219,6 @@
       animation-delay: 0.24s;
     }
 
-    /* ============================================================
-       RESPONSIVE FIXES
-       ============================================================ */
     @media (max-width: 640px) {
       .glowing-btn-content {
         padding: 10px 20px;
